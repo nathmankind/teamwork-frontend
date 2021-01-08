@@ -1,4 +1,4 @@
-import Login from "./Login";
+import LoginForm from "./Login";
 import "./styles.css";
 
-export { Login };
+export { LoginForm };
