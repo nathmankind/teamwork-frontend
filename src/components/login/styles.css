@@ -1,0 +1,16 @@
+.card {
+  padding: 16px;
+}
+div.o-login__outer-p {
+  height: 170px;
+  width: 300px;
+  background-color: lightgray;
+}
+
+div.o-login__inner-p {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
