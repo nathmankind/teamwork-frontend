@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 
 const LoginForm = () => {
@@ -36,12 +37,13 @@ const LoginForm = () => {
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="teal" textAlign="center">
-          <Image src="/logo.png" /> Log-in to your account
+          Log-in to your account
         </Header>
         <Form size="large">
           <Segment stacked>
             <Form.Input
               fluid
+              label="Email Address"
               icon="user"
               iconPosition="left"
               placeholder="E-mail address"
@@ -53,6 +55,7 @@ const LoginForm = () => {
             />
             <Form.Input
               fluid
+              label="Password"
               icon="lock"
               iconPosition="left"
               placeholder="Password"
@@ -68,6 +71,10 @@ const LoginForm = () => {
               Login
             </Button>
           </Segment>
+          <div>
+            Don't have an account? Sign up{" "}
+            <Link to="/create-account">Here</Link>
+          </div>
         </Form>
       </Grid.Column>
     </Grid>
