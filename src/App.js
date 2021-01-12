@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchUsers("users"));
     dispatch(fetchComments("comments"));
-    dispatch(fetchComments("posts"));
+    dispatch(fetchPosts("posts"));
   }, [dispatch]);
 
   return (
