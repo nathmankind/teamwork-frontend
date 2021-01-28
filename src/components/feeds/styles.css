@@ -1,0 +1,122 @@
+.o-feed-user-pane {
+  background: #fff;
+  height: 100vh;
+  position: static;
+  padding: 12px;
+}
+.o-feeds-content-card,
+.form-post-card {
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  filter: drop-shadow(1px 4px 4px rgba(0, 0, 0, 0.25));
+  margin-bottom: 30px;
+}
+.feed-card-left-col,
+.form-col-left,
+.comment-left-col {
+  width: 10%;
+}
+.feed-card-right-col,
+.form-col-right,
+.comment-right-col {
+  width: 90%;
+  padding: 0 12px;
+}
+.feed-card-top {
+  display: flex;
+  justify-content: space-between;
+}
+.feed-content {
+  padding: 12px 0;
+}
+.feed-content p:first-child,
+.comment-username {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.feed-comment-no {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid #cecece;
+  padding: 4px 0;
+  margin-bottom: 14px;
+}
+.user-avatar {
+  height: 40px;
+  width: 40px;
+  color: #fff;
+  background-color: #0057b5;
+  padding: 10px 5px;
+  font-weight: 800;
+  font-size: 16px;
+  border-radius: 50%;
+}
+.feed-owner-details-time p:first-child {
+  margin-bottom: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.feed-action-btn button,
+.form-btn-wrapper button {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-right: 30px;
+  color: #5d5d5d;
+}
+.form-btn-wrapper > .post-btn {
+  color: #fff;
+}
+
+.form-fields input,
+.form-fields textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+  background: #efefef;
+  margin-bottom: 8px;
+}
+
+.form-file-modal {
+  border: 1px solid #cecece;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 5px;
+}
+.comment-item {
+  background: #fff;
+  padding: 12px;
+  border-radius: 5px;
+  display: flex;
+  width: 100%;
+  border: 1px solid #d4d4d4;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.comment-input-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0 6px 0;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+}
+.comment-input-box button {
+  float: right;
+  margin-bottom: 12px;
+}
+.feed-comment-no {
+  cursor: pointer;
+}
+.comment-action-btns {
+  margin-top: 16px;
+}
+.comment-action-btns button {
+  margin-right: 12px;
+  border: none;
+  font-size: 12px;
+}

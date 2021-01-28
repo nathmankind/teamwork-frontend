@@ -1,0 +1,9 @@
+{
+  "emmet.preferences": {},
+  "settings": {
+    "emmet.includeLanguages": {
+      "javascript": "javascriptreact"
+    }
+  },
+  "emmet.excludeLanguages": ["markdown"]
+}
