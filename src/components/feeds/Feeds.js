@@ -104,9 +104,10 @@ const Feeds = () => {
     <div>
       <Container>
         <Row>
-          <Col md={3} lg={3} xs={0} sm={0}>
+          <Col lg={3} md={3} className="d-none d-lg-block">
             <div className="user-info">
               <ListGroup variant="flush">
+                <div className="user-info-header">User Info</div>
                 <ListGroup.Item>
                   Fullname: {`${userData.first_name} ${userData.last_name}`}
                 </ListGroup.Item>
@@ -131,6 +132,7 @@ const Feeds = () => {
           </Col>
           <Col md={6}>
             {/* Form for posting */}
+            <div className="feed-header">Feeds</div>
             <div className="form-post-card">
               <div className="form-col-left">
                 <div className="user-avatar">
