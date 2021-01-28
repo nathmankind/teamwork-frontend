@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Modal,
-  Icon,
-  Grid,
-  Message,
-} from "semantic-ui-react";
+import { Form, Input, Button, Modal, Grid, Message } from "semantic-ui-react";
 import axios from "axios";
 import { AiFillEdit } from "react-icons/ai";
 
@@ -17,7 +9,6 @@ export const EditPostModal = ({ postId, ...rest }) => {
   const [open, setOpen] = useState(false);
   const [postTitle, setPostTitle] = useState("");
   const [article, setArticle] = useState("");
-  const [gif, setGif] = useState();
   const [posts, setPosts] = useState([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
