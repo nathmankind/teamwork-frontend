@@ -6,11 +6,17 @@ const AppNavbar = () => {
     <>
       <Navbar bg="primary" variant="dark" sticky="top">
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Navbar.Brand href="/">TeamWork</Navbar.Brand>
+          <Nav className="ml-auto">
+            <Nav.Link href="/feeds">Feeds</Nav.Link>
+            <Nav.Link
+              href="/login"
+              onClick={() => {
+                sessionStorage.removeItem("user_payload");
+              }}
+            >
+              Logout
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>

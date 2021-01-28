@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 
 const LoginForm = () => {
-  const api_url = "http://localhost:8000/api/v1";
+  const api_url = "http://api-teamwork.herokuapp.com/api/v1";
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -25,6 +26,7 @@ const LoginForm = () => {
       .catch((err) => {
         console.log(err);
       });
+    console.log(api_url);
   };
 
   const [email, setEmail] = useState("");
@@ -36,12 +38,13 @@ const LoginForm = () => {
     <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="teal" textAlign="center">
-          <Image src="/logo.png" /> Log-in to your account
+          Log-in to your account
         </Header>
         <Form size="large">
           <Segment stacked>
             <Form.Input
               fluid
+              label="Email Address"
               icon="user"
               iconPosition="left"
               placeholder="E-mail address"
@@ -53,6 +56,7 @@ const LoginForm = () => {
             />
             <Form.Input
               fluid
+              label="Password"
               icon="lock"
               iconPosition="left"
               placeholder="Password"
@@ -67,6 +71,10 @@ const LoginForm = () => {
             <Button color="teal" fluid size="large" onClick={handleSubmit}>
               Login
             </Button>
+            <div className="o-login__msg">
+              Don't have an account? Sign up{" "}
+              <Link to="/create-account">Here</Link>
+            </div>
           </Segment>
         </Form>
       </Grid.Column>

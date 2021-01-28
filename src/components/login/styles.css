@@ -14,3 +14,17 @@ div.o-login__inner-p {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+.ui.teal.button,
+.ui.teal.buttons .button {
+  background-color: #007bff !important;
+  color: #fff;
+  text-shadow: none;
+  background-image: none;
+}
+.ui.center.aligned.header {
+  color: #007bff !important;
+}
+
+.ui.teal.header img {
+  display: none !important;
+}
