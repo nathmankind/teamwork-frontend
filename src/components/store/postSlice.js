@@ -5,7 +5,7 @@ export const fetchPosts = createAsyncThunk(
   "posts",
   async (post_path) =>
     await axios
-      .get(`http://localhost:8000/api/v1/${post_path}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/${post_path}`)
       .then((response) => {
         return response.data;
       })

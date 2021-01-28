@@ -5,7 +5,7 @@ export const fetchComments = createAsyncThunk(
   "comments",
   async (path_url) =>
     await axios
-      .get(`http://localhost:8000/api/v1/${path_url}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/${path_url}`)
       .then((response) => {
         return response.data;
       })

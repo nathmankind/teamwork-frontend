@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const fetchUsers = createAsyncThunk("users", (api_path) =>
   axios
-    .get(`http://localhost:8000/api/v1/auth/${api_path}`)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/auth/${api_path}`)
     .then((response) => {
       return response.data;
     })
