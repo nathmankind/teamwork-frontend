@@ -5,7 +5,7 @@ import { useHistory, Link } from "react-router-dom";
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 
 const LoginForm = () => {
-  const api_url = "http://localhost:8000/api/v1";
+  const api_url = "http://api-teamwork.herokuapp.com/api/v1";
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -26,6 +26,7 @@ const LoginForm = () => {
       .catch((err) => {
         console.log(err);
       });
+    console.log(api_url);
   };
 
   const [email, setEmail] = useState("");
@@ -70,11 +71,11 @@ const LoginForm = () => {
             <Button color="teal" fluid size="large" onClick={handleSubmit}>
               Login
             </Button>
+            <div className="o-login__msg">
+              Don't have an account? Sign up{" "}
+              <Link to="/create-account">Here</Link>
+            </div>
           </Segment>
-          <div>
-            Don't have an account? Sign up{" "}
-            <Link to="/create-account">Here</Link>
-          </div>
         </Form>
       </Grid.Column>
     </Grid>

@@ -1,33 +1,37 @@
-import { React, useState } from "react";
-import { Container, Row, Col, ListGroup, Spinner } from "react-bootstrap";
-import { IoFlagOutline } from "react-icons/io5";
-import { GoComment } from "react-icons/go";
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Spinner,
+  ListGroup,
+  Button,
+} from "react-bootstrap";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { UserListSelectors, PostsSelectors, CommentsSelectors } from "../store";
+import { UserListSelectors, CommentsSelectors, PostsSelectors } from "../store";
+import { useParams } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 import { AiFillEdit, AiOutlineUser } from "react-icons/ai";
+import { IoFlagOutline } from "react-icons/io5";
+import { GoComment } from "react-icons/go";
 import EditPostModal from "./EditPostModal";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import DeletePostModal from "./DeleteModal";
-import { useHistory } from "react-router-dom";
+import EditCommentModal from "./EditComment";
+import DeleteCommentModal from "./DeleteComment";
 
-const Feeds = () => {
-  const [isArticle, setIsArticle] = useState(false);
-  const [isGif, setIsGif] = useState(false);
-  const [postTitle, setPostTitle] = useState("");
-  const [article, setArticle] = useState("");
-  const [gifFile, setGifFile] = useState();
+const SingleFeedView = () => {
+  const { postId } = useParams();
+
+  const [post, setPost] = useState([]);
+  const [comment, setComment] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [selectedPostId, setSelectedPostId] = useState("");
-  const [comment, setComment] = useState("");
-  const [activeIndex, setActiveIndex] = useState(-1);
-
-  const base_url = `http://localhost:8000/api/v1`;
-  const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
-  const currentUserId = JSON.parse(sessionStorage.getItem("user_payload")).id;
-  const userData = JSON.parse(sessionStorage.getItem("user_payload"));
+  const [cardOpen, setCardOpen] = useState(false);
+  const [editComment, setEditComment] = useState(false);
+  const [deleteComment, setDeleteComment] = useState(false);
+  const [commentId, setCommentId] = useState("");
 
   const { selectAllUsers } = UserListSelectors;
   const { selectAllComments, selectCommentStatus } = CommentsSelectors;
@@ -38,67 +42,51 @@ const Feeds = () => {
   const Posts = useSelector(selectAllPosts);
   const allPosts = Posts.data.data;
 
-  const history = useHistory();
+  const currentUserId = JSON.parse(sessionStorage.getItem("user_payload")).id;
+  const userData = JSON.parse(sessionStorage.getItem("user_payload"));
+  useEffect(() => {
+    if (allPosts !== undefined) {
+      const singlePost = allPosts.filter((post) => {
+        return post.id === postId;
+      });
+      setPost(singlePost);
+    }
+  }, [postId, allPosts]);
 
-  if (commentStatus === "loading" || commentStatus === "idle") {
+  if (commentStatus !== "completed") {
     return (
       <Spinner animation="border" role="status">
         <span className="sr-only">Loading...</span>
       </Spinner>
     );
   }
+  const base_url = `${process.env.REACT_APP_BACKEND_URL}/api/v1`;
+  const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
 
-  const handleArticlePostSubmit = () => {
-    if (gifFile === undefined && article !== "") {
-      const data = {
-        title: postTitle,
-        article: article,
-      };
-      axios
-        .post(`${base_url}/posts`, data, {
-          headers: {
-            token: `${token}`,
-          },
-        })
-        .then(
-          (response) => {
-            if ([200, 201].includes(response.status)) {
-              setTimeout(() => {
-                alert("Successful Post");
-                window.location.reload();
-              }, 3000);
-            }
-          },
-          (error) => {
-            console.log(error);
+  const AddComment = (post_id) => {
+    console.log(post_id);
+    const data = {
+      comment: comment,
+    };
+    axios
+      .post(`${base_url}/posts/${post_id}/comment`, data, {
+        headers: {
+          token: `${token}`,
+        },
+      })
+      .then(
+        (response) => {
+          if ([200, 201].includes(response.status)) {
+            setTimeout(() => {
+              alert("Comment has been added");
+              window.location.reload();
+            }, 3000);
           }
-        );
-    }
-    if (gifFile !== undefined && article === "") {
-      const fileData = new FormData();
-      fileData.append("gif", gifFile);
-      fileData.append("title", postTitle);
-
-      axios
-        .post(`${base_url}/posts/gif`, fileData, {
-          headers: {
-            token: `${token}`,
-          },
-        })
-        .then(
-          (response) => {
-            if ([200, 201].includes(response.status)) {
-              setTimeout(() => {
-                alert("Successful Post");
-                window.location.reload();
-              }, 3000);
-            }
-          },
-          (error) => {
-            alert(error);
-          }
-        );
-    }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   return (
@@ -130,86 +118,9 @@ const Feeds = () => {
               </ListGroup>
             </div>
           </Col>
-          <Col md={6}>
-            {/* Form for posting */}
-            <div className="form-post-card">
-              <div className="form-col-left">
-                <div className="user-avatar">
-                  <AiOutlineUser
-                    style={{ color: "#fff", width: 28, height: 22 }}
-                  />
-                </div>
-              </div>
-              <div className="form-col-right">
-                <div className="form-area">
-                  <div className="form-fields">
-                    <input
-                      type="text"
-                      name="post-title"
-                      placeholder="Enter Post title"
-                      value={postTitle}
-                      onChange={(e) => {
-                        const { value } = e.target;
-                        setPostTitle(value);
-                      }}
-                    />
-                    {isArticle && (
-                      <textarea
-                        name="article"
-                        id=""
-                        cols="100%"
-                        rows="10"
-                        placeholder="Enter article post"
-                        value={article}
-                        onChange={(e) => {
-                          const { value } = e.target;
-                          setArticle(value);
-                        }}
-                      ></textarea>
-                    )}
-                    {isGif && (
-                      <input
-                        type="file"
-                        name="gif"
-                        accept=".gif"
-                        onChange={(e) => {
-                          const file = e.target.files;
-                          setGifFile(file[0]);
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div className="form-btn-wrapper">
-                    <button
-                      onClick={() => {
-                        setIsArticle(!isArticle);
-                        setIsGif(false);
-                      }}
-                    >
-                      Artcicle
-                    </button>
-                    <button
-                      onClick={() => {
-                        setIsGif(!isGif);
-                        setIsArticle(false);
-                      }}
-                    >
-                      Gif
-                    </button>
-                    <button
-                      className="btn btn-primary post-btn"
-                      onClick={handleArticlePostSubmit}
-                    >
-                      Post
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Form ends */}
-            {allPosts !== undefined &&
-              allPosts.map((post) => {
+          <Col md={6} lg={6}>
+            {post !== undefined &&
+              post.map((post) => {
                 return (
                   <div key={post.id} className="o-feeds-content-card">
                     <div className="feed-card-left-col">
@@ -251,13 +162,11 @@ const Feeds = () => {
                               style={{ width: 20, height: 25, marginRight: 10 }}
                               onClick={() => {
                                 setModalShow(true);
-                                setSelectedPostId(post.id);
                               }}
                             />
                             <RiDeleteBin6Line
                               onClick={() => {
                                 setDeleteModal(true);
-                                setSelectedPostId(post.id);
                               }}
                             />
                           </div>
@@ -266,12 +175,12 @@ const Feeds = () => {
                         <EditPostModal
                           show={modalShow}
                           onHide={() => setModalShow(false)}
-                          post_id={selectedPostId}
+                          post_id={postId}
                         />
                         <DeletePostModal
                           show={deleteModal}
                           onHide={() => setDeleteModal(false)}
-                          post_id={selectedPostId}
+                          post_id={postId}
                         />
                       </div>
 
@@ -290,7 +199,7 @@ const Feeds = () => {
                       </div>
                       <div
                         className="feed-comment-no"
-                        onClick={() => setActiveIndex(allPosts.indexOf(post))}
+                        onClick={() => setCardOpen(true)}
                       >
                         <p>
                           {`${
@@ -304,18 +213,35 @@ const Feeds = () => {
                       <div className="feed-action-btn">
                         <button
                           className="comment-btn"
-                          onClick={() => history.push(`/feeds/${post.id}`)}
+                          onClick={() => setCardOpen(true)}
                         >
                           {" "}
-                          <GoComment /> View Post
+                          <GoComment /> Add Comment
                         </button>
                         <button>
                           <IoFlagOutline /> Flag content
                         </button>
                       </div>
 
-                      {activeIndex === allPosts.indexOf(post) && (
+                      {cardOpen && (
                         <div className="comment-section">
+                          <div className="comment-input-box">
+                            <input
+                              type="text"
+                              value={comment}
+                              onChange={(e) => {
+                                const { value } = e.target;
+
+                                setComment(value);
+                              }}
+                            />
+                            <Button
+                              variant="primary"
+                              onClick={() => AddComment(post.id)}
+                            >
+                              Send
+                            </Button>
+                          </div>
                           <div className="all-comments">
                             {allComments.data.data !== undefined &&
                               allComments.data.data
@@ -361,6 +287,36 @@ const Feeds = () => {
                                             {comment.comment}
                                           </p>
                                         </div>
+                                        <EditCommentModal
+                                          show={editComment}
+                                          onHide={() => setEditComment(false)}
+                                          commentId={commentId}
+                                        />
+                                        <DeleteCommentModal
+                                          show={deleteComment}
+                                          onHide={() => setDeleteComment(false)}
+                                          commentId={commentId}
+                                          comment_id={1}
+                                        />
+                                        {currentUserId === comment.user_id && (
+                                          <div className="comment-action-btns">
+                                            <Button
+                                              onClick={() => {
+                                                setEditComment(true);
+                                                setCommentId(comment.id);
+                                              }}
+                                            >
+                                              Edit comment
+                                            </Button>
+                                            <Button
+                                              onClick={() =>
+                                                setDeleteComment(true)
+                                              }
+                                            >
+                                              Delete comment
+                                            </Button>
+                                          </div>
+                                        )}
                                       </div>
                                     </div>
                                   );
@@ -378,4 +334,5 @@ const Feeds = () => {
     </div>
   );
 };
-export default Feeds;
+
+export default SingleFeedView;

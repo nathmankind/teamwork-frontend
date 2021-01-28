@@ -91,7 +91,7 @@ const EditPostModal = (props) => {
     <Modal
       {...props}
       show={props.show}
-      size="lg"
+      size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -107,9 +107,7 @@ const EditPostModal = (props) => {
           </Toast.Header>
           <Toast.Body>Your edit was successful</Toast.Body>
         </Toast>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading && post id : {props.post_id}
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Edit Post</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Group controlId="formBasicEmail">

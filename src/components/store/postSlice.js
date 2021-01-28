@@ -49,7 +49,7 @@ const postsSlice = createSlice({
   },
 });
 
-const selectAllPosts = (state) => state.posts.data;
+const selectAllPosts = (state) => state.posts.allPosts;
 
 export const postsReducer = postsSlice.reducer;
 export const postsAction = postsSlice.actions;

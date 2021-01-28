@@ -22,7 +22,7 @@ export const EditPostModal = ({ postId, ...rest }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const base_url = `http://localhost:8000/api/v1`;
+  const base_url = `${process.env.REACT_APP_BACKEND_URL}/api/v1`;
   const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
 
   useEffect(() => {
@@ -44,13 +44,6 @@ export const EditPostModal = ({ postId, ...rest }) => {
       setPostTitle(posts[0].title);
     }
   }, [posts, open]);
-
-  //   const clearForm = () => {
-  //     setFirstName("");
-  //     setLastName("");
-  //     setEmail("");
-  //     setPhoneNumber("");
-  //   };
 
   const close = () => {
     setOpen(false);

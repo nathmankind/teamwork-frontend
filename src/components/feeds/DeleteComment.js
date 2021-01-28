@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button, Toast } from "react-bootstrap";
+import React, { useState } from "react";
+import { Modal, Button, Toast, Spinner } from "react-bootstrap";
 import axios from "axios";
 
-const DeletePostModal = (props) => {
+const DeleteCommentModal = (props) => {
   const [showToast, setShowToast] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const base_url = `http://localhost:8000/api/v1`;
   const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
 
-  useEffect(() => {
-    if (props.show === true) {
-      axios
-        .get(`${base_url}/posts/${props.post_id}`, {
-          headers: {
-            token: `${token}`,
-          },
-        })
-        .then((res) => {});
-    }
-  }, [base_url, props.post_id, props.show, token]);
-
   const handleDeleteSubmit = () => {
     axios
-      .delete(`${base_url}/posts/${props.post_id}`, {
+      .delete(`${base_url}/comments/${props.commentId}`, {
         headers: {
           token: `${token}`,
         },
@@ -30,6 +19,7 @@ const DeletePostModal = (props) => {
       .then(
         (response) => {
           if ([200, 201].includes(response.status)) {
+            setIsClicked(false);
             setTimeout(() => {
               setShowToast(true);
               window.location.reload();
@@ -63,23 +53,42 @@ const DeletePostModal = (props) => {
           <Toast.Body>Your delete was successful</Toast.Body>
         </Toast>
         <Modal.Title id="contained-modal-title-vcenter">
-          Delete Post
+          Delete comment
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Are you sure you want to delete this post?</p>
+        <p>Are you sure you want to delete this comment?</p>
       </Modal.Body>
 
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>
           No
         </Button>
-        <Button variant="primary" onClick={handleDeleteSubmit}>
-          Yes
-        </Button>
+        {isClicked ? (
+          <Button variant="primary" disabled>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+            <span className="sr-only">Loading...</span>
+          </Button>
+        ) : (
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleDeleteSubmit();
+              setIsClicked(true);
+            }}
+          >
+            Yes
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default DeletePostModal;
+export default DeleteCommentModal;
