@@ -21,10 +21,9 @@ const Feeds = () => {
   const [modalShow, setModalShow] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState("");
-  const [comment, setComment] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  const base_url = `http://localhost:8000/api/v1`;
+  const base_url = process.env.REACT_APP_BACKEND_URL;
   const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
   const currentUserId = JSON.parse(sessionStorage.getItem("user_payload")).id;
   const userData = JSON.parse(sessionStorage.getItem("user_payload"));

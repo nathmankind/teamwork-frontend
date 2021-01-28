@@ -22,12 +22,11 @@ export const EditPostModal = ({ postId, ...rest }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const base_url = `${process.env.REACT_APP_BACKEND_URL}/api/v1`;
   const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
 
   useEffect(() => {
     axios
-      .get(`${base_url}/posts/${postId}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`, {
         headers: {
           token: `${token}`,
         },
@@ -36,7 +35,7 @@ export const EditPostModal = ({ postId, ...rest }) => {
         setPosts(res.data.data);
         console.log(res.data.data);
       });
-  }, [base_url, postId, token]);
+  }, [postId, token]);
 
   useEffect(() => {
     if (open && posts !== []) {

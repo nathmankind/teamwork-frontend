@@ -9,7 +9,7 @@ const EditCommentModal = (props) => {
   const [showToast, setShowToast] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
-  const base_url = `http://localhost:8000/api/v1`;
+  const base_url = process.env.REACT_APP_BACKEND_URL;
   const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
 
   const { selectAllComments } = CommentsSelectors;

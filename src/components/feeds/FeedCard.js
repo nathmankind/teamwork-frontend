@@ -2,7 +2,6 @@ import React from "react";
 import { IoFlagOutline } from "react-icons/io5";
 import { GoComment } from "react-icons/go";
 import { IoEllipsisHorizontal } from "react-icons/io5";
-import { FaUserAlt } from "react-icons/fa";
 
 const FeedCard = (gif_url, article, title) => {
   return (

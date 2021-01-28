@@ -28,3 +28,6 @@ div.o-login__inner-p {
 .ui.teal.header img {
   display: none !important;
 }
+.o-login__msg {
+  padding: 12px 0;
+}

@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 
-import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
+import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
 
 const LoginForm = () => {
-  const api_url = "http://api-teamwork.herokuapp.com/api/v1";
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -13,7 +12,7 @@ const LoginForm = () => {
       password: password,
     };
     axios
-      .post(`${api_url}/auth/login`, userData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, userData)
       .then((res) => {
         const data = res.data.data;
 
@@ -21,12 +20,10 @@ const LoginForm = () => {
         if (data) {
           history.push("/feeds");
         }
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(api_url);
   };
 
   const [email, setEmail] = useState("");

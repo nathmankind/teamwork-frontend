@@ -11,15 +11,12 @@ const SignUp = () => {
   const [gender, setGender] = useState("");
   const [department, setDepartment] = useState("");
   const [address, setAddress] = useState("");
-  //   const [isAdmin, setIsAdmin] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  //   const [userType, setuserType] = useState("");
 
-  const base_url = `http://localhost:8000/api/v1`;
+  const base_url = process.env.REACT_APP_BACKEND_URL;
 
   const formSubmit = (e) => {
     e.preventDefault();
-    //   if(is_admin === 'employee')
     const data = {
       email: email,
       password: password,

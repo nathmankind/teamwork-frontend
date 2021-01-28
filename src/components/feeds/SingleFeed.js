@@ -60,7 +60,7 @@ const SingleFeedView = () => {
       </Spinner>
     );
   }
-  const base_url = `${process.env.REACT_APP_BACKEND_URL}/api/v1`;
+  const base_url = `${process.env.REACT_APP_BACKEND_URL}`;
   const token = JSON.parse(sessionStorage.getItem("user_payload")).token;
 
   const AddComment = (post_id) => {

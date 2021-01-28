@@ -5,10 +5,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useRouteMatch,
+  Redirect,
 } from "react-router-dom";
 import { LoginForm } from "./components/login";
-import { Home } from "./components/home";
 import { Feeds, SingleFeedView } from "./components/feeds";
 import { AppNavbar } from "./components/navbar";
 import { useDispatch } from "react-redux";
@@ -22,33 +21,29 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    <Redirect to="/login"></Redirect>;
     dispatch(fetchUsers("users"));
     dispatch(fetchComments("comments"));
     dispatch(fetchPosts("posts"));
   }, [dispatch]);
 
-  // const { path } = useRouteMatch();
   return (
     <div className="App">
       <Router>
         <Switch>
           <Route path="/">
             <AppNavbar />
-            {/* <Route exact path="/">
-              <Home />
-            </Route> */}
-            {/* <ProtectedRoute path="/"> */}
+            <ProtectedRoute path="/">
+              <Route exact path="/">
+                <Feeds />
+              </Route>
+              <Route path="/feeds/:postId">
+                <SingleFeedView />
+              </Route>
+            </ProtectedRoute>
             <Route path="/create-account">
               <SignUp />
             </Route>
-            <Route exact path="/feeds">
-              <Feeds />
-            </Route>
-            <Route path="/feeds/:postId">
-              <SingleFeedView />
-            </Route>
-            {/* </ProtectedRoute> */}
-
             <Route exact path="/login">
               <LoginForm />
             </Route>
