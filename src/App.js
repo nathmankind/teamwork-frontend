@@ -37,6 +37,9 @@ function App() {
               <Route exact path="/">
                 <Feeds />
               </Route>
+              <Route exact path="/feeds">
+                <Feeds />
+              </Route>
               <Route path="/feeds/:postId">
                 <SingleFeedView />
               </Route>

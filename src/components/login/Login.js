@@ -18,7 +18,7 @@ const LoginForm = () => {
 
         sessionStorage.setItem("user_payload", JSON.stringify(data));
         if (data) {
-          history.push("/feeds");
+          history.push("/");
         }
       })
       .catch((err) => {
